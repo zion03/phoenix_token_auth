@@ -7,10 +7,10 @@ defmodule PhoenixTokenAuth.Mixfile do
     [app: :phoenix_token_auth,
      version: "0.4.0",
      elixir: "~> 1.1",
-     package: package,
-     description: description,
+     package: package(),
+     description: description(),
      source_url: @repo_url,
-     deps: deps]
+     deps: deps()]
   end
 
   # Configuration for the OTP application
