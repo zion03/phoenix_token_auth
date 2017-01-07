@@ -24,11 +24,11 @@ defmodule PhoenixTokenAuth.Plug do
     end
   end
 
-  defp check_token({:ok, token}) do
+  def check_token({:ok, token}) do
     Joken.decode(token)
     |> check_whether_token_is_known(token)
   end
-  defp check_token(_), do: {:error, "Not authorized"}
+  def check_token(_), do: {:error, "Not authorized"}
 
   defp check_whether_token_is_known({:ok, token_data}, token) do
     import Ecto.Query, only: [from: 2]
