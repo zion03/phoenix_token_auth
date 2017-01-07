@@ -66,7 +66,7 @@ Returns:
   defp token_expiry_secs do
     Timex.now
     |> Timex.shift(mins: token_validity_minutes)
-    |> Timex.to_secs
+    |> Timex.to_seconds
   end
 
   defp token_validity_minutes do
