@@ -1,6 +1,6 @@
 defmodule PhoenixTokenAuth.Authenticator do
   alias PhoenixTokenAuth.Util
-  alias Timex.Date
+  use Timex
   alias PhoenixTokenAuth.UserHelper
 
   @doc """
@@ -64,9 +64,9 @@ Returns:
   end
 
   defp token_expiry_secs do
-    Date.now
-    |> Date.shift(mins: token_validity_minutes)
-    |> Date.to_secs
+    Timex.now
+    |> Timex.shift(mins: token_validity_minutes)
+    |> Timex.to_secs
   end
 
   defp token_validity_minutes do
