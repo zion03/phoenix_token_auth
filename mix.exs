@@ -53,7 +53,7 @@ defmodule PhoenixTokenAuth.Mixfile do
         {:cowboy, "~> 1.0.0"},
         {:comeonin, "~> 2.0.0"},
         {:joken, "~> 0.13.1"},
-        {:poison, "~> 3.0.0"},
+        {:poison, "~> 2.2.0"},
         {:secure_random, "~> 0.1.0"},
         {:mailgun, "~> 0.1.1"},
         {:timex, "~> 3.1.7"},
