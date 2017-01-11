@@ -64,7 +64,7 @@ Returns:
   end
 
   defp token_expiry_secs do
-    1583814503
+    :os.system_time(:seconds) + token_validity_minutes*60
   end
 
   defp token_validity_minutes do
