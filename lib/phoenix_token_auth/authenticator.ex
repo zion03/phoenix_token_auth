@@ -67,7 +67,7 @@ Returns:
     :os.system_time(:seconds) + token_validity_minutes*60
   end
 
-  defp token_validity_minutes do
+  def token_validity_minutes do
     Application.get_env(:phoenix_token_auth, :token_validity_in_minutes, 7 * 24 * 60)
   end
 end
