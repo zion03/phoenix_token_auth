@@ -19,8 +19,9 @@ defmodule PhoenixTokenAuth.Controllers.Users do
   Responds with status 200 and body "ok" if successfull.
   Responds with status 422 and body {errors: {field: "message"}} otherwise.
   """
-  def create(conn, params = %{"user" => %{"email" => email}}) when email != "" and email != nil do
-    {confirmation_token, changeset} = Registrator.changeset(params["user"])
+  %{"data" => %{"attributes" => attrs,
+  def create(conn, %{"data" => %{"attributes" => attrs}}) when attrs["email"] != "" and attrs["email"] != nil do
+    {confirmation_token, changeset} = Registrator.changeset(attrs)
     |> Confirmator.confirmation_needed_changeset
 
     if changeset.valid? do
@@ -50,7 +51,7 @@ defmodule PhoenixTokenAuth.Controllers.Users do
   end
 
   def create(conn, params) do
-    changeset = Registrator.changeset(params["user"])
+    changeset = Registrator.changeset(params["data"]["attributes"])
     Util.send_error(conn, Enum.into(changeset.errors, %{}))
   end
 
