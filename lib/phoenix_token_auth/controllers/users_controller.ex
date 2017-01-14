@@ -24,9 +24,15 @@ defmodule PhoenixTokenAuth.Controllers.Users do
     |> Confirmator.confirmation_needed_changeset
 
     if changeset.valid? do  
-        user = Util.repo.insert!(changeset)
-        #res = Mailer.send_welcome_email(user, confirmation_token, conn)
-        json conn, %{}
+    case Util.repo.insert(changeset) do
+             {:ok, user} ->
+               json conn |> put_status(201),
+               user 
+               #res = Mailer.send_welcome_email(user, confirmation_token, conn)
+             {:error, changeset} ->
+               json conn |> put_status(422),
+               changeset |> PhoenixApi.VoteSerializer.format(conn)
+           end
     else
       Util.send_error(conn, Enum.into(changeset.errors, %{}))
     end
