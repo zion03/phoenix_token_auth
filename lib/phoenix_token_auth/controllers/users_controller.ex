@@ -29,9 +29,9 @@ defmodule PhoenixTokenAuth.Controllers.Users do
                json conn |> put_status(201),
                user 
                #res = Mailer.send_welcome_email(user, confirmation_token, conn)
-             {:error, changeset} ->
+             {:error, err} ->
                json conn |> put_status(422),
-               changeset |> PhoenixApi.VoteSerializer.format(conn)
+               err
            end
     else
       Util.send_error(conn, Enum.into(changeset.errors, %{}))
