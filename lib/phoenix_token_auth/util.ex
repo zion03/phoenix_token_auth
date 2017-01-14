@@ -11,10 +11,26 @@ defmodule PhoenixTokenAuth.Util do
   end
 
   def send_error(conn, error, status \\ 422) do
-    conn
-    |> put_status(status)
-    |> json %{errors: error}
+       errors = Enum.map(error, fn {field, detail} ->
+        %{
+          source: %{ pointer: "/data/attributes/#{field}" },
+           title: "Invalid Attribute",
+           detail: render_detail(detail)
+        }
+      end)
+
+    json conn |> put_status(status),  %{errors: errors}
   end
+
+  def render_detail({message, values}) do
+      Enum.reduce values, message, fn {k, v}, acc ->
+        String.replace(acc, "%{#{k}}", to_string(v))
+      end
+  end
+
+  def render_detail(message) do
+      message
+  end  
 
   def presence_validator(field, nil), do: [{field, "can't be blank"}]
   def presence_validator(field, ""), do: [{field, "can't be blank"}]
