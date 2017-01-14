@@ -19,7 +19,7 @@ defmodule PhoenixTokenAuth.Controllers.Users do
   Responds with status 200 and body "ok" if successfull.
   Responds with status 422 and body {errors: {field: "message"}} otherwise.
   """
-  def create(conn, params = %{"data" => %{"attributes" => %{'email' => email}}}) when email != "" and email != nil do
+  def create(conn, params = %{"data" => %{"attributes" => %{"email" => email}}}) when email != "" and email != nil do
     {confirmation_token, changeset} = Registrator.changeset(params["data"]["attributes"])
     |> Confirmator.confirmation_needed_changeset
 
