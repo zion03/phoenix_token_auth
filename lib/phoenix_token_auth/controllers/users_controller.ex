@@ -23,13 +23,10 @@ defmodule PhoenixTokenAuth.Controllers.Users do
     {confirmation_token, changeset} = Registrator.changeset(params["data"]["attributes"])
     |> Confirmator.confirmation_needed_changeset
 
-    if changeset.valid? do
-      case Util.repo.transaction fn ->
+    if changeset.valid? do  
         user = Util.repo.insert!(changeset)
-      end do
         Mailer.send_welcome_email(user, confirmation_token, conn)
         {:ok, _} -> json conn, :ok
-      end
     else
       Util.send_error(conn, Enum.into(changeset.errors, %{}))
     end
