@@ -25,13 +25,12 @@ defmodule PhoenixTokenAuth.Controllers.Users do
 
     if changeset.valid? do  
     case Util.repo.insert(changeset) do
-             {:ok, user} ->
+              {:ok, user} ->
                json conn |> put_status(201),
-               user 
+               user |> PhoenixApi.UserSerializer.format(conn)
                #res = Mailer.send_welcome_email(user, confirmation_token, conn)
-             {:error, changeset} ->
-               json conn |> put_status(422),
-               changeset.errors
+             {:error, ch} ->
+               Util.send_error(conn, ch.errors)
            end
     else
       Util.send_error(conn, Enum.into(changeset.errors, %{}))
