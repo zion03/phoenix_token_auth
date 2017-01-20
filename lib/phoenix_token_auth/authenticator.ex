@@ -22,7 +22,7 @@ Returns:
 
   def authenticate(user, password) do
     case check_password(user, password) do
-      {:ok, %{confirmed_at: nil}} -> {:error, %{base: @unconfirmed_account_error_message}}
+      #{:ok, %{confirmed_at: nil}} -> {:error, %{base: @unconfirmed_account_error_message}}
       {:ok, _} -> {:ok, user}
       error -> error
     end
