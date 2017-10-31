@@ -21,7 +21,7 @@ defmodule PhoenixTokenAuth.Mixfile do
   end
 
   defp applications(:test), do: applications(:all) ++ [:blacksmith]
-  defp applications(_all),  do: [:logger]
+  defp applications(_all),  do: [:logger, :gettext]
 
   defp package do
     [
@@ -52,6 +52,7 @@ defmodule PhoenixTokenAuth.Mixfile do
     [
         {:cowboy, "~> 1.0.0"},
         {:comeonin, "~> 2.0.0"},
+        {:gettext, "~> 0.13"},
         {:joken, "~> 0.13.1"},
         {:poison, "~> 2.2.0"},
         {:secure_random, "~> 0.1.0"},
