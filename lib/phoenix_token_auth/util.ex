@@ -1,6 +1,7 @@
 defmodule PhoenixTokenAuth.Util do
   import Plug.Conn
   import Phoenix.Controller
+  require PhoenixTokenAuth.Gettext
 
   def repo do
     Application.get_env(:phoenix_token_auth, :repo)
@@ -22,15 +23,19 @@ defmodule PhoenixTokenAuth.Util do
     json conn |> put_status(status),  %{errors: errors}
   end
 
-  def render_detail({message, values}) do
-      Enum.reduce values, message, fn {k, v}, acc ->
-        String.replace(acc, "%{#{k}}", to_string(v))
-      end
-  end
+ def render_detail({msg, opts}) do
+       gt = Application.get_env(:phoenix_token_auth, :gettext)
+       if count = opts[:count] do
+           PhoenixTokenAuth.Gettext.dngettext(gt, "errors", msg, msg, count, opts)
+          else
+           PhoenixTokenAuth.Gettext.dgettext(gt, "errors", msg, opts)
+          end
+   end
 
-  def render_detail(message) do
-      message
-  end  
+   def render_detail(message) do
+      gt = Application.get_env(:phoenix_token_auth, :gettext)
+       PhoenixTokenAuth.Gettext.dgettext(gt, "errors", message)
+   end
 
   def presence_validator(field, nil), do: [{field, "can't be blank"}]
   def presence_validator(field, ""), do: [{field, "can't be blank"}]
