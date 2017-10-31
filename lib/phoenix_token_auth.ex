@@ -14,3 +14,7 @@ defmodule PhoenixTokenAuth do
   end
 
 end
+
+ defmodule PhoenixTokenAuth.Gettext do
+    use Gettext, otp_app: :phoenix_token_auth
+  end
