@@ -26,15 +26,15 @@ defmodule PhoenixTokenAuth.Util do
  def render_detail({msg, opts}) do
        gt = Application.get_env(:phoenix_token_auth, :gettext)
        if count = opts[:count] do
-           PhoenixTokenAuth.Gettext.dngettext(gt, "errors", msg, msg, count, opts)
+           Gettext.dngettext(gt, "errors", msg, msg, count, opts)
           else
-           PhoenixTokenAuth.Gettext.dgettext(gt, "errors", msg, opts)
+           Gettext.dgettext(gt, "errors", msg, opts)
           end
    end
 
    def render_detail(message) do
       gt = Application.get_env(:phoenix_token_auth, :gettext)
-       PhoenixTokenAuth.Gettext.dgettext(gt, "errors", message)
+       Gettext.dgettext(gt, "errors", message)
    end
 
   def presence_validator(field, nil), do: [{field, "can't be blank"}]
