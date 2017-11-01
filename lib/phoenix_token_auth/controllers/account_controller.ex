@@ -26,7 +26,7 @@ defmodule PhoenixTokenAuth.Controllers.Account do
 
   Responds with status 200 and body "ok" if successfull.
   """
-  def update(conn, %{"account" => params}) do
+  def update(conn, %{"data" => %{"attributes" => params}}) do
     {confirmation_token, changeset} = conn
     |> current_user
     |> AccountUpdater.changeset(params)
