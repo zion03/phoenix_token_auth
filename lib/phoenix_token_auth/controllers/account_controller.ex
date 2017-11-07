@@ -38,6 +38,7 @@ defmodule PhoenixTokenAuth.Controllers.Account do
         end
         user
       end do
+        #TODO remove dependency
         {:ok, _} -> json conn, PhoenixApi.UserSerializer.format(user, conn)
       end
     else
