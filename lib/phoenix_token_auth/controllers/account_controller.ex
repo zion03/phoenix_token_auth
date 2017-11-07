@@ -39,7 +39,7 @@ defmodule PhoenixTokenAuth.Controllers.Account do
         user
       end do
         #TODO remove dependency
-        {:ok, _} -> json conn, PhoenixApi.UserSerializer.format(user, conn)
+        {:ok, user} -> json conn, PhoenixApi.UserSerializer.format(user, conn)
       end
     else
       Util.send_error(conn, Enum.into(changeset.errors, %{}))
