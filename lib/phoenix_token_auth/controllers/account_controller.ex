@@ -36,8 +36,9 @@ defmodule PhoenixTokenAuth.Controllers.Account do
         if (confirmation_token != nil) do
           Mailer.send_new_email_address_email(user, confirmation_token, conn)
         end
+        user
       end do
-        {:ok, _} -> json conn, :ok
+        {:ok, _} -> json conn, PhoenixApi.UserSerializer.format(user, conn)
       end
     else
       Util.send_error(conn, Enum.into(changeset.errors, %{}))
